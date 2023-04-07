@@ -32,14 +32,14 @@ function clearScreen() {
         if ((parseInt(percentageCustard) + parseInt(percentageJam) + parseInt(percentageNutella)) > 100 || (parseInt(percentageCustard) + parseInt(percentageJam) + parseInt(percentageNutella)) < 100)
         {
             description = "The sum of the percentages should not be lower or higher than 100.";
-            document.getElementById("result").innerText = description;
+            document.getElementById("result").value = description;
             return;
         }
 
         if ((amount < 0) || (percentageJam > 100 || percentageJam < 0 ) || (percentageCustard > 100 || percentageCustard < 0 ) || (percentageNutella > 100 || percentageNutella < 0 ))
         {
             description = "Invalid inputs."
-            document.getElementById("result").innerText = description;
+            document.getElementById("result").value = description;
             return;
         }
 
@@ -53,6 +53,10 @@ function clearScreen() {
 
         description = `${resultJam} Jam Donuts (${boxesJam} boxes of jam) \n ${resultCustard} Custard Donuts (${boxesCustard} boxes of custard) \n ${resultNutella} Nutella Donuts (${boxesNutella} boxes of nutella)`
 
-
-        document.getElementById("result").innerText = description;
+        Swal.fire(
+            'Done!',
+            description,
+            'success'
+          )
+        document.getElementById("result").value = description;
     }
