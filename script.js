@@ -1,4 +1,11 @@
-// This function clear all the values
+    
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Impede o comportamento padrão do Enter
+            calculate();
+        }
+    });
+
 function clearScreen() {
         document.getElementById("result").value = "";
     }
