@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter = Botão - Exemplos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .exemplo {
+            background: #f4f4f4;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            border-left: 4px solid #007cba;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+        }
+        button {
+            background: #007cba;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #005a8a;
+        }
+        .resultado {
+            background: #e8f5e8;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border-left: 4px solid #28a745;
+        }
+    </style>
+</head>
+<body>
+    <h1>Como fazer Enter executar a mesma função que um botão</h1>
+
+    <div class="exemplo">
+        <h2>Método 1: Event Listener no documento</h2>
+        <p>A tecla Enter em qualquer lugar da página executa a função do botão</p>
+        <button id="botao1">Clique aqui ou pressione Enter</button>
+        <div id="resultado1" class="resultado"></div>
+    </div>
+
+    <div class="exemplo">
+        <h2>Método 2: Event Listener em um input específico</h2>
+        <p>Digite algo no campo e pressione Enter</p>
+        <input type="text" id="input2" placeholder="Digite aqui e pressione Enter">
+        <button id="botao2">Ou clique aqui</button>
+        <div id="resultado2" class="resultado"></div>
+    </div>
+
+    <div class="exemplo">
+        <h2>Método 3: Usando formulário (mais semântico)</h2>
+        <p>Em formulários, Enter automaticamente submete</p>
+        <form id="form3">
+            <input type="text" id="input3" placeholder="Digite e pressione Enter">
+            <button type="submit">Enviar</button>
+        </form>
+        <div id="resultado3" class="resultado"></div>
+    </div>
+
+    <div class="exemplo">
+        <h2>Método 4: Detectar Enter em qualquer input</h2>
+        <p>Funciona com múltiplos inputs</p>
+        <input type="text" class="input-enter" placeholder="Input 1">
+        <input type="text" class="input-enter" placeholder="Input 2">
+        <button id="botao4">Processar</button>
+        <div id="resultado4" class="resultado"></div>
+    </div>
+
+    <script>
+        // Método 1: Event Listener no documento
+        function executarFuncao1() {
+            const resultado = document.getElementById('resultado1');
+            resultado.innerHTML = `<strong>Função executada!</strong> ${new Date().toLocaleTimeString()}`;
+        }
+
+        // Botão
+        document.getElementById('botao1').addEventListener('click', executarFuncao1);
+
+        // Enter no documento
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                executarFuncao1();
+            }
+        });
+
+        // Método 2: Event Listener em input específico
+        function executarFuncao2() {
+            const input = document.getElementById('input2');
+            const resultado = document.getElementById('resultado2');
+            resultado.innerHTML = `<strong>Processado:</strong> "${input.value}"`;
+        }
+
+        // Botão
+        document.getElementById('botao2').addEventListener('click', executarFuncao2);
+
+        // Enter no input
+        document.getElementById('input2').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                executarFuncao2();
+            }
+        });
+
+        // Método 3: Usando formulário
+        function executarFuncao3(event) {
+            event.preventDefault(); // Impede o recarregamento da página
+            const input = document.getElementById('input3');
+            const resultado = document.getElementById('resultado3');
+            resultado.innerHTML = `<strong>Formulário enviado:</strong> "${input.value}"`;
+        }
+
+        document.getElementById('form3').addEventListener('submit', executarFuncao3);
+
+        // Método 4: Múltiplos inputs
+        function executarFuncao4() {
+            const inputs = document.querySelectorAll('.input-enter');
+            const valores = Array.from(inputs).map(input => input.value).filter(val => val.trim());
+            const resultado = document.getElementById('resultado4');
+            resultado.innerHTML = `<strong>Valores processados:</strong> ${valores.join(', ') || 'Nenhum valor'}`;
+        }
+
+        // Botão
+        document.getElementById('botao4').addEventListener('click', executarFuncao4);
+
+        // Enter em qualquer input com classe 'input-enter'
+        document.querySelectorAll('.input-enter').forEach(input => {
+            input.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    executarFuncao4();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
