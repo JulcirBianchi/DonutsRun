@@ -25,18 +25,17 @@ function clearScreen() {
         var amount            =  document.getElementById("amount").value;
         var percentageJam     =  document.getElementById("percentageJam").value;
         var percentageCustard =  document.getElementById("percentageCustard").value;
-        var percentageNutella =  document.getElementById("percentageNutella").value;
 
         var description = "";
 
-        if ((parseInt(percentageCustard) + parseInt(percentageJam) + parseInt(percentageNutella)) > 100 || (parseInt(percentageCustard) + parseInt(percentageJam) + parseInt(percentageNutella)) < 100)
+        if ((parseInt(percentageCustard) + parseInt(percentageJam)) > 100 || (parseInt(percentageCustard) + parseInt(percentageJam)) < 100)
         {
             description = "The sum of the percentages should not be lower or higher than 100.";
             document.getElementById("result").value = description;
             return;
         }
 
-        if ((amount < 0) || (percentageJam > 100 || percentageJam < 0 ) || (percentageCustard > 100 || percentageCustard < 0 ) || (percentageNutella > 100 || percentageNutella < 0 ))
+        if ((amount < 0) || (percentageJam > 100 || percentageJam < 0 ) || (percentageCustard > 100 || percentageCustard < 0 ))
         {
             description = "Invalid inputs."
             document.getElementById("result").value = description;
@@ -45,13 +44,11 @@ function clearScreen() {
 
         var resultJam     = (amount / 100) * percentageJam;
         var resultCustard = (amount / 100) * percentageCustard;
-        var resultNutella = (amount / 100) * percentageNutella;
 
-        var boxesJam     = resultJam / 20;
-        var boxesCustard = resultCustard / 20;
-        var boxesNutella = resultNutella / 20;
+        var boxesJam     = (resultJam / 60).toFixed(2);
+        var boxesCustard = (resultCustard / 60).toFixed(2);
 
-        description = `${resultJam} Jam Donuts (${boxesJam} boxes of jam) \n ${resultCustard} Custard Donuts (${boxesCustard} boxes of custard) \n ${resultNutella} Nutella Donuts (${boxesNutella} boxes of nutella)`
+        description = `${resultJam} Jam Donuts (${boxesJam} boxes of jam) \n ${resultCustard} Custard Donuts (${boxesCustard} boxes of custard)`
 
         Swal.fire(
             'Done!',
