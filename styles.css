@@ -200,8 +200,6 @@ body{
 /* Estilos para o sistema de tabs/carrossel */
 .tab-container {
   margin-top: 20px;
-  touch-action: pan-y; /* Permite scroll vertical mas detecta swipe horizontal */
-  user-select: none; /* Previne seleção de texto durante swipe */
 }
 
 .tab-navigation {
@@ -220,7 +218,7 @@ body{
   color: #666;
   cursor: pointer;
   position: relative;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s ease;
   border-bottom: 2px solid transparent;
 }
 
@@ -235,156 +233,34 @@ body{
   border-bottom-color: #171718;
 }
 
-/* Adiciona um indicador suave que se move */
-.tab-navigation::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  height: 2px;
-  background: #171718;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  width: 50%;
-  left: 0;
-  z-index: 10;
-}
-
-.tab-navigation.tab-0::after {
-  left: 0;
-}
-
-.tab-navigation.tab-1::after {
-  left: 50%;
-}
-
 .tab-content {
   position: relative;
   overflow: hidden;
-  min-height: 300px; /* Altura mínima para evitar "pulo" */
 }
 
 .tab-panel {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+  display: none;
   opacity: 0;
-  visibility: hidden;
   transform: translateX(20px);
-  transition: none; /* Remove transição padrão para evitar conflitos */
+  transition: all 0.3s ease;
 }
 
 .tab-panel.active {
-  position: relative;
+  display: block;
   opacity: 1;
-  visibility: visible;
   transform: translateX(0);
 }
 
-/* Animações de slide horizontal */
-.tab-panel.slide-out-left {
-  animation: slideOutLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-.tab-panel.slide-out-right {
-  animation: slideOutRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-.tab-panel.slide-in-left {
-  animation: slideInLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-.tab-panel.slide-in-right {
-  animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-/* Animações de fade */
-.tab-panel.fade-out {
-  animation: fadeOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-.tab-panel.fade-in {
-  animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-/* Keyframes para slides horizontais */
-@keyframes slideOutLeft {
-  0% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(-100%);
-  }
-}
-
-@keyframes slideOutRight {
-  0% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(100%);
-  }
-}
-
-@keyframes slideInLeft {
-  0% {
-    opacity: 0;
-    transform: translateX(100%);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInRight {
-  0% {
-    opacity: 0;
-    transform: translateX(-100%);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-/* Keyframes para fade */
-@keyframes fadeOut {
-  0% {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(0) scale(0.95);
-  }
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateX(0) scale(0.95);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-  }
-}
-
-/* Remove as animações antigas que causavam flickering */
+/* Animação de deslizamento */
 .tab-panel.slide-in {
-  animation: none;
+  animation: slideIn 0.3s ease forwards;
 }
 
 .tab-panel.slide-out {
-  animation: none;
+  animation: slideOut 0.3s ease forwards;
 }
 
 @keyframes slideIn {
-  /* Mantém para compatibilidade mas não será usado */
   from {
     opacity: 0;
     transform: translateX(20px);
@@ -396,7 +272,6 @@ body{
 }
 
 @keyframes slideOut {
-  /* Mantém para compatibilidade mas não será usado */
   from {
     opacity: 1;
     transform: translateX(0);
@@ -405,15 +280,6 @@ body{
     opacity: 0;
     transform: translateX(-20px);
   }
-}
-
-/* Melhorias para touch feedback */
-.tab-container {
-  cursor: grab;
-}
-
-.tab-container:active {
-  cursor: grabbing;
 }
 
 /* Responsividade para tabs */
@@ -438,14 +304,5 @@ body{
   .tab-btn {
     font-size: 12px;
     padding: 10px 15px;
-  }
-  
-  /* Melhora a experiência touch em mobile */
-  .tab-container {
-    padding: 10px 0;
-  }
-  
-  .tab-content {
-    min-height: 350px; /* Altura maior em mobile */
   }
 }
